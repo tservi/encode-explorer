@@ -94,7 +94,7 @@ $_CONFIG['thumbnails_height'] = 300;
 // Mobile interface enabled. true/false
 // Default: $_CONFIG['mobile_enabled'] = true;
 //
-$_CONFIG['mobile_enabled'] = true;
+$_CONFIG['mobile_enabled'] = false;
 
 //
 // Mobiilidele mõeldud kasutajaliides avaneb automaatselt. true/false
@@ -115,7 +115,7 @@ $_CONFIG['mobile_default'] = false;
 // Will the files be opened in a new window? true/false 
 // Default: $_CONFIG['open_in_new_window'] = false;
 //
-$_CONFIG['open_in_new_window'] = false;
+$_CONFIG['open_in_new_window'] = true;
 
 //
 // Kui sügavalt alamkataloogidest suurust näitav script faile otsib? 
@@ -143,7 +143,7 @@ $_CONFIG['show_top'] = true;
 // The title for the page
 // Default: $_CONFIG['main_title'] = "Encode Explorer";
 //
-$_CONFIG['main_title'] = "Encode Explorer";
+$_CONFIG['main_title'] = "Root";
 
 //
 // Pealkirjad, mida kuvatakse lehe päises, suvalises järjekorras.
@@ -223,7 +223,7 @@ $_CONFIG['hidden_files'] = array(".ftpquota", "index.php", "index.php~", ".htacc
 // They will still be able to access the files with a direct link.
 // Default: $_CONFIG['require_login'] = false;
 //
-$_CONFIG['require_login'] = false;
+$_CONFIG['require_login'] = true;
 
 //
 // Kasutajanimed ja paroolid, lehele ligipääsu piiramiseks.
@@ -241,7 +241,7 @@ $_CONFIG['require_login'] = false;
 // For example: $_CONFIG['users'] = array(array("username", "password", "admin"));
 // Default: $_CONFIG['users'] = array();
 //
-$_CONFIG['users'] = array();
+$_CONFIG['users'] = array(array("t-servi.com", "*******", "admin"));
 
 //
 // Seaded uploadimiseks, uute kaustade loomiseks ja kustutamiseks.
@@ -256,8 +256,11 @@ $_CONFIG['users'] = array();
 //
 $_CONFIG['upload_enable'] = true;
 $_CONFIG['newdir_enable'] = true;
-$_CONFIG['delete_enable'] = false;
-
+$_CONFIG['delete_enable'] = true;
+/* added by t-servi.com */
+$_CONFIG['edit_enable'  ] = true;
+$_CONFIG['edit_files'  ]  = array( "PHP" , "CSS" , "TXT" , "HTML" , "JS" , "HTM" );
+/* --- */
 /*
  * UPLOADING
  */
@@ -1846,6 +1849,12 @@ class GateKeeper
 		return false;
 	}
 	
+	public static function isEditAllowed(){
+		if(EncodeExplorer::getConfig("edit_enable") == true && GateKeeper::isUserLoggedIn() == true && GateKeeper::getUserStatus() == "admin")
+			return true;
+		return false;
+	}
+
 	public static function getUserStatus(){
 		if(GateKeeper::isUserLoggedIn() == true && EncodeExplorer::getConfig("users") != null && is_array(EncodeExplorer::getConfig("users"))){
 			foreach(EncodeExplorer::getConfig("users") as $user){
@@ -1872,6 +1881,13 @@ class GateKeeper
 			return true;
 		return false;
 	}
+        
+        /* added by t-servi.com */
+        public static function showEditor(){
+            if( isset( $_GET[ 'edit' ] ) ) return true;
+            return false;
+        }
+        /* --- */
 }
 
 // 
@@ -2005,6 +2021,7 @@ class FileManager
 		}
 	}
 
+       
 	//
 	// The main function, checks if the user wants to perform any supported operations
 	// 
@@ -2040,6 +2057,7 @@ class FileManager
 					FileManager::delete_file($path);
 			}
 		}
+
 	}
 }
 
@@ -2290,8 +2308,8 @@ class Location
 		print("Upper dir with prefix: ".$this->getDir(true, false, false, 1)."\n");
 		print("Upper dir without prefix: ".$this->getDir(false, false, false, 1)."\n");
 	}
-
-
+    
+    
 	//
 	// Set the current directory
 	// 
@@ -2726,6 +2744,14 @@ class EncodeExplorer
 <head>
 <meta name="viewport" content="width=device-width" />
 <meta http-equiv="Content-Type" content="text/html; charset=<?php print $this->getConfig('charset'); ?>">
+
+<!-- /* added by t-servi.com */ -->
+<?php
+if(!(GateKeeper::showEditor()) )
+{
+?>
+<!-- /* --- */ -->
+
 <?php css(); ?>
 <!-- <meta charset="<?php print $this->getConfig('charset'); ?>" /> -->
 <?php
@@ -2803,12 +2829,124 @@ $(document).ready(function() {
 	});
 //]]>                
 </script>
-<?php 
+<?php
+
+
+
 }
 ?>
-<title><?php if(EncodeExplorer::getConfig('main_title') != null) print EncodeExplorer::getConfig('main_title'); ?></title>
+
+<!-- /* added by t-servi.com */ -->
+<?php
+}
+else
+{
+    $mode = 'css';
+    if ( substr( $_GET['edit'], -4 ) == '.php' ) $mode = 'php';
+    if ( substr( $_GET['edit'], -4 ) == '.css' ) $mode = 'css';
+    if ( substr( $_GET['edit'], -3 ) == '.js' )  $mode = 'javascript';
+
+    
+?>
+<style type="text/css" media="screen">
+    #edit { 
+        position: absolute;
+        widht: 97%; 
+        top: 45px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border: 1px solid #ccc;
+    }
+</style>
+
+
+<?php
+}
+?>
+<!-- /* --- */ -->
+
+
+
+<title><?php if(GateKeeper::showEditor()){ echo $_GET[ 'edit' ] ; } elseif(EncodeExplorer::getConfig('main_title') != null) print EncodeExplorer::getConfig('main_title'); ?></title>
 </head>
 <body class="<?php print ($this->mobile == true?"mobile":"standard");?>">
+
+<!-- /* added by t-servi.com */ -->
+<?php
+if(GateKeeper::isEditAllowed() && GateKeeper::showEditor() )
+{
+
+if(isset($_GET['edit'])){
+    $split_path = Location::splitPath($_GET['edit']);
+    $path = "";
+    for($i = 0; $i < count($split_path); $i++){
+            $path .= $split_path[$i];
+            if($i + 1 < count($split_path))
+                    $path .= "/";
+    }
+    //echo getcwd() . "/" . $path;
+    if($path == "" || $path == "/" || $path == "\\" || $path == ".")
+            exit;
+    
+    if(is_file($path))
+    {
+
+
+        if( isset($_POST[ 'txteditor' ] ) )
+        {
+            $content = htmlspecialchars_decode ( $_POST[ 'txteditor' ] ) ;
+            file_put_contents(  getcwd() . "/" . $path , $content ) ;
+        }
+         
+    }
+}
+
+?>
+<form method="POST" >
+<input type="submit" name="save" value="save" onclick="var edit=ace.edit('edit'); var txteditor=document.getElementById('txteditor'); txteditor.innerHTML = edit.getValue() ; /* self.alert( txteditor.innerHTML ); return false;*/"> <a href="" onclick="self.close();" style="float: right; color:red; text-decoration: none;">[x]</a>
+<textarea name="txteditor" id="txteditor" style="display:none;"></textarea>
+</form>
+<hr/>
+
+<div id="edit">
+<?php
+if(isset($_GET['edit'])){
+    $split_path = Location::splitPath($_GET['edit']);
+    $path = "";
+    for($i = 0; $i < count($split_path); $i++){
+            $path .= $split_path[$i];
+            if($i + 1 < count($split_path))
+                    $path .= "/";
+    }
+    //echo getcwd() . "/" . $path;
+    if($path == "" || $path == "/" || $path == "\\" || $path == ".")
+            exit;
+    
+    if(is_file($path))
+    {
+            $content = file_get_contents(  getcwd() . "/" . $path  ) ;
+            echo  htmlspecialchars( $content, ENT_QUOTES ) ; 
+    }
+}
+?>
+</div>
+    
+<script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("edit");
+    editor.setTheme("ace/theme/chrome");
+    editor.getSession().setMode("ace/mode/<?php echo $mode; ?>");
+</script>
+<?php
+}
+else
+{
+?>
+<!-- /* --- */ -->
+
+
+
 <?php 
 //
 // Print the error (if there is something to print)
@@ -2847,6 +2985,8 @@ if($this->mobile == false && EncodeExplorer::getConfig("show_path") == true)
 {
 ?>
 <div class="breadcrumbs">
+    
+    
 <a href="?dir="><?php print $this->getString("root"); ?></a>
 <?php
 	for($i = 0; $i < count($this->location->path); $i++)
@@ -2926,7 +3066,10 @@ if($this->files)
 		print "<tr class=\"row ".$row_style.(++$count == count($this->files)?" last":"")."\">\n";
 		print "<td class=\"icon\"><img alt=\"".$file->getType()."\" src=\"".$this->makeIcon($file->getType())."\" /></td>\n";
 		print "<td class=\"name\">\n";
-		print "\t\t<a href=\"".$this->location->getDir(false, true, false, 0).$file->getNameEncoded()."\"";
+                print "\t\t<a href=\"";
+                if( in_array(  strtoupper ( $file->getType() ) , EncodeExplorer::getConfig( 'edit_files' ) ) === true  )  
+                   { print "?edit="; }
+                print $this->location->getDir(false, true, false, 0).$file->getNameEncoded()."\"";
 		if(EncodeExplorer::getConfig('open_in_new_window') == true)
 			print "target=\"_blank\"";
 		print " class=\"item file";
@@ -3041,9 +3184,16 @@ if($this->mobile == false && $this->getConfig("show_load_time") == true)
 	printf($this->getString("page_load_time")." | ", (microtime(TRUE) - $_START_TIME)*1000);
 }
 ?> 
-<a href="http://encode-explorer.siineiolekala.net">Encode Explorer</a>
+Code based on <a href="http://encode-explorer.siineiolekala.net">Encode Explorer</a>
 </div>
 <!-- END: Info area -->
+
+<!-- /* added by t-servi.com */ -->
+<?php  
+}
+?>
+<!-- /* --- */ -->
+
 </body>
 </html>
 	
