@@ -3119,7 +3119,7 @@ if(GateKeeper::isEditAllowed() && GateKeeper::showEditor() )
         {   
             if( isset($_POST[ 'txteditor' ] ) )
             {
-                $content = htmlspecialchars_decode ( $_POST[ 'txteditor' ] ) ;
+                $content = stripcslashes ( htmlspecialchars_decode ( $_POST[ 'txteditor' ] ) ) ;
                 file_put_contents(  getcwd() . "/" . $path , $content ) ;
             }
              
