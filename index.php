@@ -209,7 +209,7 @@ $_CONFIG['hidden_dirs'] = array();
 // Filenames that will be hidden from the list.
 // Default: $_CONFIG['hidden_files'] = array(".ftpquota", "index.php", "index.php~", ".htaccess", ".htpasswd");
 //
-$_CONFIG['hidden_files'] = array(".ftpquota", "index.php", "index.php~", ".htaccess", ".htpasswd");
+$_CONFIG['hidden_files'] = array();
 
 //
 // Määra kas lehe nägemiseks peab sisse logima.
@@ -241,7 +241,7 @@ $_CONFIG['require_login'] = true;
 // For example: $_CONFIG['users'] = array(array("username", "password", "admin"));
 // Default: $_CONFIG['users'] = array();
 //
-$_CONFIG['users'] = array(array("t-servi.com", "*******", "admin"));
+$_CONFIG['users'] = array(array("t-servi.com", "**************", "admin"));
 
 //
 // Seaded uploadimiseks, uute kaustade loomiseks ja kustutamiseks.
@@ -257,10 +257,17 @@ $_CONFIG['users'] = array(array("t-servi.com", "*******", "admin"));
 $_CONFIG['upload_enable'] = true;
 $_CONFIG['newdir_enable'] = true;
 $_CONFIG['delete_enable'] = true;
+
 /* added by t-servi.com */
+// enable the editors
 $_CONFIG['edit_enable'  ] = true;
-$_CONFIG['edit_files'  ]  = array( "PHP" , "CSS" , "TXT" , "HTML" , "JS" , "HTM" );
+// select wich files are edited with ace  http://ace.ajax.org
+$_CONFIG['edit_files_ace'  ]  = array( "PHP" , "CSS" , "JS" , "TXT" );
+// select wich files are edited with xinha http://trac.xinha.org/
+$_CONFIG['edit_files_xinha']  = array( "HTML" , "HTM" ) ; 
 /* --- */
+
+
 /*
  * UPLOADING
  */
@@ -313,7 +320,7 @@ $_CONFIG['upload_reject_extension'] = array("php");
 // If set, an e-mail will be sent every time someone uploads a file or creates a new dirctory.
 // Default: $_CONFIG['upload_email'] = "";
 //
-$_CONFIG['upload_email'] = "";
+$_CONFIG['upload_email'] = "jeantinguelyawais@gmail.com";
 
 //
 // Logifail. Kui määratud, siis kirjutatakse kaustade ja failide avamise kohta logi faili.
@@ -398,6 +405,7 @@ $_TRANSLATIONS["al"] = array(
 	"failed_move" => "Lëvizja e skedarit në udhëzuesin e saktë deshtoi!",
 	"wrong_password" => "Fjalëkalimi i Gabuar!!",
 	"make_directory" => "New dir",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Failed to create directory",
 	"chmod_dir_failed" => "Failed to change directory rights",
 	"unable_to_read_dir" => "Unable to read directory",
@@ -418,6 +426,7 @@ $_TRANSLATIONS["nl"] = array(
 	"failed_move" => "Fout bij het verplaatsen van tijdelijk uploadbestand!",
 	"wrong_password" => "Fout wachtwoord!",
 	"make_directory" => "Nieuwe folder",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Fout bij aanmaken folder!",
 	"chmod_dir_failed" => "Rechten konden niet gewijzigd worden!",
 	"unable_to_read_dir" => "Unable to read directory",
@@ -438,6 +447,7 @@ $_TRANSLATIONS["en"] = array(
 	"failed_move" => "Failed to move the file into the right directory!",
 	"wrong_password" => "Wrong password",
 	"make_directory" => "New dir",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Failed to create directory",
 	"chmod_dir_failed" => "Failed to change directory rights",
 	"unable_to_read_dir" => "Unable to read directory",
@@ -470,6 +480,7 @@ $_TRANSLATIONS["et"] = array(
 	"failed_move" => "Faili ei &otilde;nnestunud &otilde;igesse kausta liigutada!",
 	"wrong_password" => "Vale parool",
 	"make_directory" => "Uus kaust",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Kausta loomine ebaõnnestus",
 	"chmod_dir_failed" => "Kausta õiguste muutmine ebaõnnestus",
 	"unable_to_read_dir" => "Unable to read directory",
@@ -490,6 +501,7 @@ $_TRANSLATIONS["fi"] = array(
 	"failed_move" => "Tiedoston siirto kansioon epäonnistui!",
 	"wrong_password" => "Väärä salasana",
 	"make_directory" => "Uusi kansio",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Uuden kansion luonti epäonnistui!",
 	"chmod_dir_failed" => "Kansion käyttäjäoikeuksien muuttaminen epäonnistui!",
 	"unable_to_read_dir" => "Kansion sisältöä ei voi lukea.",
@@ -521,7 +533,8 @@ $_TRANSLATIONS["fr"] = array(
 	"failed_upload" => "Erreur lors de l'envoi",
 	"failed_move" => "Erreur lors du changement de dossier",
 	"wrong_password" => "Mauvais mot de passe",
-	"make_directory" => "Nouveau dossier",
+	"make_directory"  => "Nouveau dossier",
+        "make_file" => "Nouveau fichier",
 	"new_dir_failed" => "Erreur lors de la cr&eacute;ation du dossier",
 	"chmod_dir_failed" => "Impossible de changer les permissions du dossier",
 	"unable_to_read_dir" => "Impossible de lire le dossier",
@@ -542,6 +555,7 @@ $_TRANSLATIONS["de"] = array(
 	"failed_move" => "Verschieben der Datei ist fehlgeschlagen!",
 	"wrong_password" => "Falsches Passwort",
 	"make_directory" => "Neuer Ordner",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Erstellen des Ordners fehlgeschlagen",
 	"chmod_dir_failed" => "Veränderung der Zugriffsrechte des Ordners fehlgeschlagen",
 	"unable_to_read_dir" => "Unable to read directory",
@@ -562,6 +576,7 @@ $_TRANSLATIONS["el"] = array(
 	"failed_move" => "Αποτυχία μεταφοράς αρχείου στον κατάλληλο φάκελο!",
 	"wrong_password" => "Λάθος κωδικός",
 	"make_directory" => "Δημιουργία νέου φακέλου",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Αποτυχία δημιουργίας νέου φακέλου",
 	"chmod_dir_failed" => "Αποτυχία τροποποίησης δικαιωμάτων φακέλου",
 	"unable_to_read_dir" => "Unable to read directory",
@@ -582,6 +597,7 @@ $_TRANSLATIONS["hu"] = array(
 	"failed_move" => "A fájl mozgatása nem sikerült!",
 	"wrong_password" => "Hibás jelszó",
 	"make_directory" => "Új mappa",
+        "make_file" => "Make file",
 	"new_dir_failed" => "A mappa létrehozása nem sikerült",
 	"chmod_dir_failed" => "A mappa jogainak megváltoztatása nem sikerült",
 	"unable_to_read_dir" => "A mappa nem olvasható",
@@ -612,6 +628,7 @@ $_TRANSLATIONS["it"] = array(
 	"failed_move" => "Spostamento del file nella cartella fallito!",
 	"wrong_password" => "Password sbagliata",
 	"make_directory" => "Nuova cartella",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Creazione cartella fallita!",
 	"chmod_dir_failed" => "Modifica dei permessi della cartella fallita!",
 	"unable_to_read_dir" => "Unable to read directory",
@@ -632,6 +649,7 @@ $_TRANSLATIONS["no"] = array(
 	"failed_move" => "Kunne ikke flytte objektet",
 	"wrong_password" => "Feil passord",
 	"make_directory" => "Ny mappe",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Kunne ikke lage ny mappe",
 	"chmod_dir_failed" => "Kunne ikke endre rettigheter",
 	"unable_to_read_dir" => "Kunne ikke lese mappen",
@@ -652,6 +670,7 @@ $_TRANSLATIONS["pl"] = array(
 	"failed_move" => "Przenosienie pliku nie powidlo sie!",
 	"wrong_password" => "Niepoprawne haslo",
 	"make_directory" => "Nowy folder",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Blad podczas tworzenia nowego foldera",
 	"chmod_dir_failed" => "Blad podczas zmiany uprawnienia foldera",
 	"unable_to_read_dir" => "Odczytanie foldera nie powiodlo sie",
@@ -682,6 +701,7 @@ $_TRANSLATIONS["pt_BR"] = array(
 	"failed_move" => "Falha ao mover o arquivo para o diretório correto!",
 	"wrong_password" => "Senha errada",
 	"make_directory" => "Nova pasta",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Falha ao criar diretório",
 	"chmod_dir_failed" => "Falha ao mudar os privilégios do diretório",
 	"unable_to_read_dir" => "Não foi possível ler o diretório",
@@ -712,6 +732,7 @@ $_TRANSLATIONS["ro"] = array(
 	"failed_move" => "Mutarea fisierului in alt director a esuat!",
 	"wrong_password" => "Parol gresita!",
 	"make_directory" => "Director nou",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Eroare la crearea directorului",
 	"chmod_dir_failed" => "Eroare la modificarea drepturilor pe director",
 	"unable_to_read_dir" => "Nu s-a putut citi directorul",
@@ -732,6 +753,7 @@ $_TRANSLATIONS["ru"] = array(
     "failed_move" => "Не удалось переместить файл в нужную папку!",
     "wrong_password" => "Неверный пароль",
     "make_directory" => "Новая папка",
+    "make_file" => "Make file",
     "new_dir_failed" => "Не удалось создать папку",
     "chmod_dir_failed" => "Не удалось изменить права доступа к папке",
     "unable_to_read_dir" => "Не возможно прочитать папку",
@@ -762,6 +784,7 @@ $_TRANSLATIONS["sk"] = array(
 	"failed_move" => "Nepodarilo sa presunú? súbor do vybraného adresára!",
 	"wrong_password" => "Neplatné heslo!",
 	"make_directory" => "Nový prie?inok",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Nepodarilo sa vytvori? adresár!",
 	"chmod_dir_failed" => "Nepodarilo sa zmeni? práva adresára!",
 	"unable_to_read_dir" => "Nemôžem ?íta? adresár",
@@ -782,6 +805,7 @@ $_TRANSLATIONS["es"] = array(
 	"failed_move" => "Error al mover el archivo al directorio seleccionado!",
 	"wrong_password" => "ContraseÃ±a incorrecta",
 	"make_directory" => "New dir",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Failed to create directory",
 	"chmod_dir_failed" => "Failed to change directory rights",
 	"unable_to_read_dir" => "Unable to read directory",
@@ -802,6 +826,7 @@ $_TRANSLATIONS["sv"] = array(
 	"failed_move" => "Fel vid flytt av fil till mapp!",
 	"wrong_password" => "Fel losenord",
 	"make_directory" => "Ny mapp",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Fel vid skapande av mapp",
 	"chmod_dir_failed" => "Fel vid andring av mappens egenskaper",
 	"unable_to_read_dir" => "Kan inte lasa den filen",
@@ -822,6 +847,7 @@ $_TRANSLATIONS["tr"] = array(
 	"failed_move" => "Hatali dosya tasimasi!",
 	"wrong_password" => "Yeniden sifre",
 	"make_directory" => "Yeni dosya",
+        "make_file" => "Make file",
 	"new_dir_failed" => "Dosya olusturalamadi",
 	"chmod_dir_failed" => "Dosya ayari deqistirelemedi",
 	"unable_to_read_dir" => "Unable to read directory",
@@ -1884,7 +1910,7 @@ class GateKeeper
         
         /* added by t-servi.com */
         public static function showEditor(){
-            if( isset( $_GET[ 'edit' ] ) ) return true;
+            if( isset( $_GET[ 'edit' ] )  ) return true;
             return false;
         }
         /* --- */
@@ -1915,12 +1941,12 @@ class FileManager
 		global $encodeExplorer;
 		if(strlen($dirname) > 0)
 		{
-			$forbidden = array(".", "/", "\\");
+			$forbidden = array("..", "/", "\\"); // changed by t-servi.com old version array(".", "/", "\\");
 			for($i = 0; $i < count($forbidden); $i++)
 			{
 				$dirname = str_replace($forbidden[$i], "", $dirname);
 			}
-			
+			if($dirname == '.') { $dirname = '' ;} // added by t-servi.com
 			if(!$location->uploadAllowed())
 			{
 				// The system configuration does not allow uploading here
@@ -1931,22 +1957,50 @@ class FileManager
 				// The target directory is not writable
 				$encodeExplorer->setErrorString("upload_dir_not_writable");
 			}
-			else if(!mkdir($location->getDir(true, false, false, 0).$dirname, 0777))
-			{
-				// Error creating a new directory
-				$encodeExplorer->setErrorString("new_dir_failed");
-			}
-			else if(!chmod($location->getDir(true, false, false, 0).$dirname, 0777))
-			{
-				// Error applying chmod 777
-				$encodeExplorer->setErrorString("chmod_dir_failed");
-			}
-			else
-			{
-				// Directory successfully created, sending e-mail notification
-				Logger::logCreation($location->getDir(true, false, false, 0).$dirname, true);
-				Logger::emailNotification($location->getDir(true, false, false, 0).$dirname, false);
-			}
+			else /* -- modified by t-servi.com */
+                        {
+                            // choosing if it's a file or a directory that is created !
+                            if( isset( $_POST[ 'make_file' ] ) )
+                            {
+                                
+                                if(!touch($location->getDir(true, false, false, 0).$dirname, 0777))
+                                {
+                                        // Error creating a new directory
+                                        $encodeExplorer->setErrorString("new_dir_failed");
+                                }
+                                else if(!chmod($location->getDir(true, false, false, 0).$dirname, 0777))
+                                {
+                                        // Error applying chmod 777
+                                        $encodeExplorer->setErrorString("chmod_dir_failed");
+                                }
+                                else
+                                {
+                                        // Directory successfully created, sending e-mail notification
+                                        Logger::logCreation($location->getDir(true, false, false, 0).$dirname, true);
+                                        Logger::emailNotification($location->getDir(true, false, false, 0).$dirname, false);
+                                }
+                                
+                            }
+                            else
+                            {
+                                if(!mkdir($location->getDir(true, false, false, 0).$dirname, 0777))
+                                {
+                                        // Error creating a new directory
+                                        $encodeExplorer->setErrorString("new_dir_failed");
+                                }
+                                else if(!chmod($location->getDir(true, false, false, 0).$dirname, 0777))
+                                {
+                                        // Error applying chmod 777
+                                        $encodeExplorer->setErrorString("chmod_dir_failed");
+                                }
+                                else
+                                {
+                                        // Directory successfully created, sending e-mail notification
+                                        Logger::logCreation($location->getDir(true, false, false, 0).$dirname, true);
+                                        Logger::emailNotification($location->getDir(true, false, false, 0).$dirname, false);
+                                }
+                            }
+                        } /* --- */
 		}
 	}
 
@@ -2746,124 +2800,288 @@ class EncodeExplorer
 <meta http-equiv="Content-Type" content="text/html; charset=<?php print $this->getConfig('charset'); ?>">
 
 <!-- /* added by t-servi.com */ -->
+
 <?php
+// modification in the header of the file
+// the first part is for the file explorer : remark the ! ( not ) after the if
+
 if(!(GateKeeper::showEditor()) )
 {
 ?>
 <!-- /* --- */ -->
 
-<?php css(); ?>
-<!-- <meta charset="<?php print $this->getConfig('charset'); ?>" /> -->
-<?php
-if(($this->getConfig('log_file') != null && strlen($this->getConfig('log_file')) > 0)
-	|| ($this->getConfig('thumbnails') != null && $this->getConfig('thumbnails') == true && $this->mobile == false)
-	|| (GateKeeper::isDeleteAllowed()))
-{ 
-?>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-//<![CDATA[
-$(document).ready(function() {
-<?php
-	if(GateKeeper::isDeleteAllowed()){
-?>
-	$('td.del a').click(function(){
-		var answer = confirm('Are you sure you want to delete : \'' + $(this).attr("data-name") + "\' ?");
-		return answer;
-	});
-<?php 
-	}	
-	if($this->logging == true)
-	{ 
-?>
-		function logFileClick(path)
-		{
-			 $.ajax({
-		        	async: false,
-					type: "POST",
-					data: {log: path},
-					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-					cache: false
-				});
-		}
-		
-		$("a.file").click(function(){
-			logFileClick("<?php print $this->location->getDir(true, true, false, 0);?>" + $(this).html());
-			return true;
-		});
-<?php 
-	}
-	if(EncodeExplorer::getConfig("thumbnails") == true && $this->mobile == false)
-	{
-?>
-		function positionThumbnail(e) {
-			xOffset = 30;
-			yOffset = 10;
-			$("#thumb").css("left",(e.clientX + xOffset) + "px");
-
-			diff = 0;
-			if(e.clientY + $("#thumb").height() > $(window).height())
-				diff = e.clientY + $("#thumb").height() - $(window).height();
-			
-			$("#thumb").css("top",(e.pageY - yOffset - diff) + "px");
-		}
-		
-		$("a.thumb").hover(function(e){
-			$("#thumb").remove();
-			$("body").append("<div id=\"thumb\"><img src=\"?thumb="+ $(this).attr("href") +"\" alt=\"Preview\" \/><\/div>");
-			positionThumbnail(e);
-			$("#thumb").fadeIn("medium");
-		},
-		function(){
-			$("#thumb").remove();
-		});
-
-		$("a.thumb").mousemove(function(e){
-			positionThumbnail(e);
-			});
-
-		$("a.thumb").click(function(e){$("#thumb").remove(); return true;});
-<?php 
-	}
-?>
-	});
-//]]>                
-</script>
-<?php
-
+    <?php css(); ?>
+    <!-- <meta charset="<?php print $this->getConfig('charset'); ?>" /> -->
+    <?php
+    if(($this->getConfig('log_file') != null && strlen($this->getConfig('log_file')) > 0)
+            || ($this->getConfig('thumbnails') != null && $this->getConfig('thumbnails') == true && $this->mobile == false)
+            || (GateKeeper::isDeleteAllowed()))
+    { 
+    ?>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    //<![CDATA[
+    $(document).ready(function() {
+    <?php
+            if(GateKeeper::isDeleteAllowed()){
+    ?>
+            $('td.del a').click(function(){
+                    var answer = confirm('Are you sure you want to delete : \'' + $(this).attr("data-name") + "\' ?");
+                    return answer;
+            });
+    <?php 
+            }	
+            if($this->logging == true)
+            { 
+    ?>
+                    function logFileClick(path)
+                    {
+                             $.ajax({
+                                    async: false,
+                                            type: "POST",
+                                            data: {log: path},
+                                            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                                            cache: false
+                                    });
+                    }
+                    
+                    $("a.file").click(function(){
+                            logFileClick("<?php print $this->location->getDir(true, true, false, 0);?>" + $(this).html());
+                            return true;
+                    });
+    <?php 
+            }
+            if(EncodeExplorer::getConfig("thumbnails") == true && $this->mobile == false)
+            {
+    ?>
+                    function positionThumbnail(e) {
+                            xOffset = 30;
+                            yOffset = 10;
+                            $("#thumb").css("left",(e.clientX + xOffset) + "px");
+    
+                            diff = 0;
+                            if(e.clientY + $("#thumb").height() > $(window).height())
+                                    diff = e.clientY + $("#thumb").height() - $(window).height();
+                            
+                            $("#thumb").css("top",(e.pageY - yOffset - diff) + "px");
+                    }
+                    
+                    $("a.thumb").hover(function(e){
+                            $("#thumb").remove();
+                            $("body").append("<div id=\"thumb\"><img src=\"?thumb="+ $(this).attr("href") +"\" alt=\"Preview\" \/><\/div>");
+                            positionThumbnail(e);
+                            $("#thumb").fadeIn("medium");
+                    },
+                    function(){
+                            $("#thumb").remove();
+                    });
+    
+                    $("a.thumb").mousemove(function(e){
+                            positionThumbnail(e);
+                            });
+    
+                    $("a.thumb").click(function(e){$("#thumb").remove(); return true;});
+    <?php 
+            }
+    ?>
+            });
+    //]]>                
+    </script>
+    <?php
+    
 
 
 }
 ?>
 
 <!-- /* added by t-servi.com */ -->
+
 <?php
+
+// modification in the header of the file
+// the upperpart is for the explorer
+// the part under is for the editors
+
 }
 else
 {
-    $mode = 'css';
-    if ( substr( $_GET['edit'], -4 ) == '.php' ) $mode = 'php';
-    if ( substr( $_GET['edit'], -4 ) == '.css' ) $mode = 'css';
-    if ( substr( $_GET['edit'], -3 ) == '.js' )  $mode = 'javascript';
-
-    
-?>
-<style type="text/css" media="screen">
-    #edit { 
-        position: absolute;
-        widht: 97%; 
-        top: 45px;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        border: 1px solid #ccc;
-    }
-</style>
-
+        if( isset($_GET[ 'edit' ] ) && isset( $_GET[ 'editor' ] ) && $_GET[ 'editor' ] == 'ace' )
+        {
+            $mode = 'css';
+            if ( substr( $_GET['edit'], -4 ) == '.php' ) $mode = 'php';
+            if ( substr( $_GET['edit'], -4 ) == '.css' ) $mode = 'css';
+            if ( substr( $_GET['edit'], -3 ) == '.js' )  $mode = 'javascript';
+        
+            
+            ?>
+            <style type="text/css" media="screen">
+                #edit { 
+                    position: absolute;
+                    widht: 97%; 
+                    top: 45px;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    border: 1px solid #ccc;
+                }
+            </style>
+            <?php
+            // ace editor
+        }
+        else
+        {
+        
+            // default editor is xinha ...
+            // download from http://trac.xinha.org/ or from http://www.t-servi.com/xinha/Xinha-0.96.1.zip 
+            
+            
+            ?>
+            <script type="text/javascript">
+                _editor_url  = "http://www.t-servi.com/xinha/"   // (preferably absolute) URL (including trailing slash) where Xinha is installed
+                _editor_lang = "en";       // And the language we need to use in the editor.
+                _editor_skin = "silva";    // If you want use a skin, add the name (of the folder) here
+                _editor_icons = "classic"; // If you want to use a different iconset, add the name (of the folder, under the `iconsets` folder) here
+            </script>
+            <script type="text/javascript" src="http://www.t-servi.com/xinha/XinhaCore.js"></script>
+            
+            <script type="text/javascript">
+            xinha_editors = null;
+            xinha_init    = null;
+            xinha_config  = null;
+            xinha_plugins = null;
+            
+            // This contains the names of textareas we will make into Xinha editors
+            xinha_init = xinha_init ? xinha_init : function()
+            {
+               /** STEP 1 ***************************************************************
+               * First, specify the textareas that shall be turned into Xinhas. 
+               * For each one add the respective id to the xinha_editors array.
+               * I you want add more than on textarea, keep in mind that these 
+               * values are comma seperated BUT there is no comma after the last value.
+               * If you are going to use this configuration on several pages with different
+               * textarea ids, you can add them all. The ones that are not found on the
+               * current page will just be skipped.
+               ************************************************************************/
+              
+              xinha_editors = xinha_editors ? xinha_editors :
+              [
+                'txteditor', 
+              ];
+              
+              /** STEP 2 ***************************************************************
+               * Now, what are the plugins you will be using in the editors on this
+               * page.  List all the plugins you will need, even if not all the editors
+               * will use all the plugins.
+               *
+               * The list of plugins below is a good starting point, but if you prefer
+               * a simpler editor to start with then you can use the following 
+               * 
+               * xinha_plugins = xinha_plugins ? xinha_plugins : [ ];
+               *
+               * which will load no extra plugins at all.
+               ************************************************************************/
+            
+              xinha_plugins = xinha_plugins ? xinha_plugins :
+              [
+               'CharacterMap',
+               'ContextMenu',
+               'ListType',
+               'Stylist',
+               'Linker',
+               'SuperClean',
+               'TableOperations'
+              ];
+              
+                     // THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
+                     if(!Xinha.loadPlugins(xinha_plugins, xinha_init)) return;
+            
+            
+              /** STEP 3 ***************************************************************
+               * We create a default configuration to be used by all the editors.
+               * If you wish to configure some of the editors differently this will be
+               * done in step 5.
+               *
+               * If you want to modify the default config you might do something like this.
+               *
+               *   xinha_config = new Xinha.Config();
+               *   xinha_config.width  = '640px';
+               *   xinha_config.height = '420px';
+               *
+               *************************************************************************/
+            
+               xinha_config = xinha_config ? xinha_config() : new Xinha.Config();
+               xinha_config.width  = '100%';
+               xinha_config.height = '85%';
+               
+              //this is the standard toolbar, feel free to remove buttons as you like
+              xinha_config.toolbar =
+              [
+                ["popupeditor"],
+                ["separator","formatblock","fontname","fontsize","bold","italic","underline","strikethrough"],
+                ["separator","forecolor","hilitecolor","textindicator"],
+                ["separator","subscript","superscript"],
+                ["linebreak","separator","justifyleft","justifycenter","justifyright","justifyfull"],
+                ["separator","insertorderedlist","insertunorderedlist","outdent","indent"],
+                ["separator","inserthorizontalrule","createlink","insertimage","inserttable"],
+                ["linebreak","separator","undo","redo","selectall","print"], (Xinha.is_gecko ? [] : ["cut","copy","paste","overwrite","saveas"]),
+                ["separator","killword","clearfonts","removeformat","toggleborders","splitblock","lefttoright", "righttoleft"],
+                ["separator","htmlmode","showhelp","about"]
+              ];
+            
+                    
+               // To adjust the styling inside the editor, we can load an external stylesheet like this
+               // NOTE : YOU MUST GIVE AN ABSOLUTE URL
+              
+               xinha_config.pageStyleSheets = [ _editor_url + "examples/full_example.css" ];
+            
+              /** STEP 4 ***************************************************************
+               * We first create editors for the textareas.
+               *
+               * You can do this in two ways, either
+               *
+               *   xinha_editors   = Xinha.makeEditors(xinha_editors, xinha_config, xinha_plugins);
+               *
+               * if you want all the editor objects to use the same set of plugins, OR;
+               *
+               *   xinha_editors = Xinha.makeEditors(xinha_editors, xinha_config);
+               *   xinha_editors.myTextArea.registerPlugins(['Stylist']);
+               *   xinha_editors.anotherOne.registerPlugins(['CSS','SuperClean']);
+               *
+               * if you want to use a different set of plugins for one or more of the
+               * editors.
+               ************************************************************************/
+            
+              xinha_editors   = Xinha.makeEditors(xinha_editors, xinha_config, xinha_plugins);
+            
+              /** STEP 5 ***************************************************************
+               * If you want to change the configuration variables of any of the
+               * editors,  this is the place to do that, for example you might want to
+               * change the width and height of one of the editors, like this...
+               *
+               *   xinha_editors.myTextArea.config.width  = '640px';
+               *   xinha_editors.myTextArea.config.height = '480px';
+               *
+               ************************************************************************/
+            
+            
+              /** STEP 6 ***************************************************************
+               * Finally we "start" the editors, this turns the textareas into
+               * Xinha editors.
+               ************************************************************************/
+            
+              Xinha.startEditors(xinha_editors);
+            }
+            
+            Xinha._addEvent(window,'load', xinha_init); // this executes the xinha_init function on page load 
+                                                        // and does not interfere with window.onload properties set by other scripts
+            </script>
 
 <?php
-}
+        } // end of if-else for the editor's selection
+
+} // end of if-else for the header of the html
 ?>
+
 <!-- /* --- */ -->
 
 
@@ -2873,76 +3091,115 @@ else
 <body class="<?php print ($this->mobile == true?"mobile":"standard");?>">
 
 <!-- /* added by t-servi.com */ -->
+
+
 <?php
+
+// separate the html body in two parts
+// first part for the editors
+// second part for the explorer
+
 if(GateKeeper::isEditAllowed() && GateKeeper::showEditor() )
 {
-
-if(isset($_GET['edit'])){
-    $split_path = Location::splitPath($_GET['edit']);
-    $path = "";
-    for($i = 0; $i < count($split_path); $i++){
-            $path .= $split_path[$i];
-            if($i + 1 < count($split_path))
-                    $path .= "/";
-    }
-    //echo getcwd() . "/" . $path;
-    if($path == "" || $path == "/" || $path == "\\" || $path == ".")
-            exit;
-    
-    if(is_file($path))
+    // saving the datas ... before to get them
+    if(isset($_GET['edit']) && isset($_POST[ 'txteditor' ]))
     {
-
-
-        if( isset($_POST[ 'txteditor' ] ) )
-        {
-            $content = htmlspecialchars_decode ( $_POST[ 'txteditor' ] ) ;
-            file_put_contents(  getcwd() . "/" . $path , $content ) ;
+        $split_path = Location::splitPath($_GET['edit']);
+        $path = "";
+        for($i = 0; $i < count($split_path); $i++){
+                $path .= $split_path[$i];
+                if($i + 1 < count($split_path))
+                        $path .= "/";
         }
-         
+        //echo getcwd() . "/" . $path;
+        if($path == "" || $path == "/" || $path == "\\" || $path == ".")
+                exit;
+        
+        if(is_file($path))
+        {   
+            if( isset($_POST[ 'txteditor' ] ) )
+            {
+                $content = htmlspecialchars_decode ( $_POST[ 'txteditor' ] ) ;
+                file_put_contents(  getcwd() . "/" . $path , $content ) ;
+            }
+             
+        }
     }
-}
-
-?>
-<form method="POST" >
-<input type="submit" name="save" value="save" onclick="var edit=ace.edit('edit'); var txteditor=document.getElementById('txteditor'); txteditor.innerHTML = edit.getValue() ; /* self.alert( txteditor.innerHTML ); return false;*/"> <a href="" onclick="self.close();" style="float: right; color:red; text-decoration: none;">[x]</a>
-<textarea name="txteditor" id="txteditor" style="display:none;"></textarea>
-</form>
-<hr/>
-
-<div id="edit">
-<?php
-if(isset($_GET['edit'])){
-    $split_path = Location::splitPath($_GET['edit']);
-    $path = "";
-    for($i = 0; $i < count($split_path); $i++){
-            $path .= $split_path[$i];
-            if($i + 1 < count($split_path))
-                    $path .= "/";
-    }
-    //echo getcwd() . "/" . $path;
-    if($path == "" || $path == "/" || $path == "\\" || $path == ".")
-            exit;
     
-    if(is_file($path))
+    // getting the datas...
+    $content = "";
+    if(isset($_GET['edit']))
     {
-            $content = file_get_contents(  getcwd() . "/" . $path  ) ;
-            echo  htmlspecialchars( $content, ENT_QUOTES ) ; 
+        $split_path = Location::splitPath($_GET['edit']);
+        $path = "";
+        for($i = 0; $i < count($split_path); $i++){
+                $path .= $split_path[$i];
+                if($i + 1 < count($split_path))
+                        $path .= "/";
+        }
+        //echo getcwd() . "/" . $path;
+        if($path == "" || $path == "/" || $path == "\\" || $path == ".")
+                exit;
+        
+        if(is_file($path))
+        {
+                $content = file_get_contents(  getcwd() . "/" . $path  ) ;
+                //echo  htmlspecialchars( $content, ENT_QUOTES ) ; 
+        }
     }
-}
-?>
-</div>
     
-<script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-<script>
-    var editor = ace.edit("edit");
-    editor.setTheme("ace/theme/chrome");
-    editor.getSession().setMode("ace/mode/<?php echo $mode; ?>");
-</script>
+    // ace comes first!
+    if( isset($_GET[ 'edit' ] ) && isset( $_GET[ 'editor' ] ) && $_GET[ 'editor' ] == 'ace' )
+    {
+        
+        ?>
+        <form method="POST" >
+        <input type="submit" name="save" value="save" onclick="var edit=ace.edit('edit'); var txteditor=document.getElementById('txteditor'); txteditor.innerHTML = edit.getValue() ; /* self.alert( txteditor.innerHTML ); return false;*/">
+        <a href="" onclick="self.close();" style="float: right; color:red; text-decoration: none;">[x]</a>
+        <textarea name="txteditor" id="txteditor" style="display:none;"></textarea>
+        </form>
+        <hr/>
+        
+        <div id="edit">
+        <?php
+            echo  htmlspecialchars( $content, ENT_QUOTES ) ; 
+        ?>
+        </div>
+            
+        <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script>
+            var editor = ace.edit("edit");
+            editor.setTheme("ace/theme/chrome");
+            editor.getSession().setMode("ace/mode/<?php echo $mode; ?>");
+        </script>
 <?php
+    }
+    else
+    {
+        /* else it's xinha */
+?>
+        <form method="POST" >
+        <input type="submit" name="save" value="save" >
+        <a href="" onclick="self.close();" style="float: right; color:red; text-decoration: none;">[x]</a>
+        <hr/>
+        <textarea name="txteditor" id="txteditor">
+        <?php
+            echo  htmlspecialchars( $content, ENT_QUOTES ) ; 
+        ?>            
+        </textarea>
+        </form>
+        
+
+<?php        
+    }
 }
 else
 {
+
+// end of if, begin of else for the body of the html
+
 ?>
+
 <!-- /* --- */ -->
 
 
@@ -3067,8 +3324,10 @@ if($this->files)
 		print "<td class=\"icon\"><img alt=\"".$file->getType()."\" src=\"".$this->makeIcon($file->getType())."\" /></td>\n";
 		print "<td class=\"name\">\n";
                 print "\t\t<a href=\"";
-                if( in_array(  strtoupper ( $file->getType() ) , EncodeExplorer::getConfig( 'edit_files' ) ) === true  )  
-                   { print "?edit="; }
+                if( in_array(  strtoupper ( $file->getType() ) , EncodeExplorer::getConfig( 'edit_files_ace' ) ) === true  )  
+                   { print "?editor=ace&amp;edit="; }
+                if( in_array(  strtoupper ( $file->getType() ) , EncodeExplorer::getConfig( 'edit_files_xinha' ) ) === true  )  
+                   { print "?editor=xinha&amp;edit="; }
                 print $this->location->getDir(false, true, false, 0).$file->getNameEncoded()."\"";
 		if(EncodeExplorer::getConfig('open_in_new_window') == true)
 			print "target=\"_blank\"";
@@ -3142,7 +3401,11 @@ if(GateKeeper::isAccessAllowed() && $this->location->uploadAllowed() && (GateKee
 		?>
 		<div id="newdir_container">
 			<input name="userdir" type="text" class="upload_dirname" />
-			<input type="submit" value="<?php print $this->getString("make_directory"); ?>" />
+                        <!-- /* modified by t-servi.com */ -->
+			<input type="submit" name="make_directory" value="<?php print $this->getString("make_directory"); ?>" />
+                        <input type="submit" name="make_file" value="<?php print $this->getString("make_file"); ?>" />
+                        <!-- /* --- */ -->
+   
 		</div>
 		<?php 
 		}
@@ -3189,16 +3452,20 @@ Code based on <a href="http://encode-explorer.siineiolekala.net">Encode Explorer
 <!-- END: Info area -->
 
 <!-- /* added by t-servi.com */ -->
-<?php  
+
+<?php
+
+// end of if-else for the body of the html
 }
 ?>
+
 <!-- /* --- */ -->
 
 </body>
 </html>
 	
 <?php
-	}
+}
 }
 
 //
